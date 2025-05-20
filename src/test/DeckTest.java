@@ -63,9 +63,9 @@ class DeckTest {
         deck.generateDeck();
         deck.shuffle();
 
-        deck.dealCard();
+        deck.dealCardAndRemoveFromDeck();
         assertEquals(deck.getDeck().size(), 51);
-        deck.dealCard();
+        deck.dealCardAndRemoveFromDeck();
         assertEquals(deck.getDeck().size(), 50);
 
     }

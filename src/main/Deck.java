@@ -11,7 +11,7 @@ public class Deck {
         return deck;
     }
 
-    public void generateDeckShuffle(){
+    public void generateDeckShuffle() {
         generateDeck();
         shuffle();
     }
@@ -35,12 +35,22 @@ public class Deck {
         return deck;
     }
 
-    public void shuffle(){
-       Collections.shuffle(deck);
+    public void shuffle() {
+        Collections.shuffle(deck);
     }
-    public void dealCard(){
-        deck.remove(0);
-        //need to assign card to a hand will need to be updated.
+
+    public Card dealCardAndRemoveFromDeck() {
+        ifDeckNeedsToBeCreatedOrReplenished();
+
+        Card card = Card.valueOf(getDeck().get(0).name());
+        deck.remove(getDeck().get(0));
+        return card;
+    }
+
+    private void ifDeckNeedsToBeCreatedOrReplenished() {
+        if (deck.size() == 0) {
+            generateDeckShuffle();
+        }
     }
 
 }
