@@ -11,12 +11,29 @@ public enum Card {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    FACECARD(10);;
+    FACECARD(10);
+    private int points;
+    private int point;
+    private boolean ace;
 
-    Card(int high, int low, boolean isAce) {
+
+    Card(int points, int point, boolean isAce) {
+        this.points = points;
+        this.point = point;
+        this.ace = isAce;
     }
 
-    Card(int i) {
+    Card(int points) {
+        this.points = points;
+    }
+    public boolean isAce(){
+        return ace;
+    }
+    public int getPoints(){
+        return points;
+    }
+    public int getPoint(){
+        return point;
     }
 
 }

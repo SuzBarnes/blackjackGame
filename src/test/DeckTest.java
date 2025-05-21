@@ -4,7 +4,6 @@ import main.Card;
 import main.Deck;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -63,9 +62,9 @@ class DeckTest {
         deck.generateDeck();
         deck.shuffle();
 
-        deck.dealCardAndRemoveFromDeck();
+        deck.dealInitialHandAndRemoveCardsFromDeck();
         assertEquals(deck.getDeck().size(), 51);
-        deck.dealCardAndRemoveFromDeck();
+        deck.dealInitialHandAndRemoveCardsFromDeck();
         assertEquals(deck.getDeck().size(), 50);
 
     }
