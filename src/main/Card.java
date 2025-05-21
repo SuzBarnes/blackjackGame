@@ -1,7 +1,7 @@
 package main;
 
 public enum Card {
-    ACE(11, 1,true),
+
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -11,7 +11,10 @@ public enum Card {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    FACECARD(10);
+    FACECARD(10),
+    ACE(11, 1,true);
+
+
     private int points;
     private int point;
     private boolean ace;
