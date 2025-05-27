@@ -56,10 +56,14 @@ public class HandTest {
         hand2.calculatePoints();
         assertEquals(hand2.getPoints(), 19);
     }
-//
-//    @Test
-//    void aBetCanBeMade(){}
-//
+
+    @Test
+    void aBetCanBeMade(){
+        Hand hand = new Hand();
+        hand.setBet(10);
+        assertEquals(hand.getBet(), 10);
+    }
+
     @Test
     void ifHandIsOver21ThePlayerIsBust(){
         Hand hand = new Hand();
@@ -139,6 +143,11 @@ public class HandTest {
         hand.hit(hand.getDeck());
         assertEquals(hand.getHand().size(), 4);
     }
+
+//    @Test
+//    void ifPlayerWinsWithBlackJackReturnDoubleTheBet(){
+//
+//    }
 //    @Test
 //    void ifPlayerScoreGreaterThanDealerPlayerWins(){}
 //

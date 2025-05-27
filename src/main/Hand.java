@@ -12,6 +12,14 @@ public class Hand extends Deck {
 
     private int points;
 
+    public int getBet() {
+        return bet;
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
+
     private int bet;
 
     public void setHand(ArrayList<Card> hand) {
@@ -65,6 +73,7 @@ public class Hand extends Deck {
     public boolean isBlackJack(int points, int numberOfCards) {
         return points == 21 && numberOfCards == 2;
     }
+
 
 
 }
