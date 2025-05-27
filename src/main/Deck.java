@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
-
     private ArrayList<Card> deck = new ArrayList<>();
+
+    public void setDeck(ArrayList<Card> deck) {
+        this.deck = deck;
+    }
+
 
     public ArrayList<Card> getDeck() {
         return deck;
@@ -59,5 +63,4 @@ public class Deck {
             generateDeckShuffle();
         }
     }
-
 }
