@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Hand extends Deck {
     ArrayList<Card> hand = new ArrayList<>();
@@ -10,6 +11,14 @@ public class Hand extends Deck {
     }
 
     private int points;
+
+    public int getBet() {
+        return bet;
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
 
     private int bet;
 
@@ -30,6 +39,7 @@ public class Hand extends Deck {
                 "createInitialHand() points: " + points
         );
     }
+
     public void hit(ArrayList<Card> deck) {
         hand.add(dealCardAndRemoveFromDeck(deck));
         calculatePoints();
@@ -38,18 +48,32 @@ public class Hand extends Deck {
         );
     }
 
-    public void calculatePoints(){
+    public void calculatePoints() {
         points = 0;
+        //sorting the Cards enum into order so Ace is last:
+        Collections.sort(hand);
         for (Card card : hand) {
-            points = points + card.getPoints();
+//
+            if (card.isAce() && hand.size() >= 3 && points >10) {
+                points = points + card.getPoint();
+            } else {
+                points = points + card.getPoints();
+            }
         }
+        isBlackJack(points, hand.size());
+        isBust();
     }
-    private boolean isBust(int points){
+
+    public boolean isBust() {
         return points > 21;
-    };
-    private boolean isBlackJack(int points, int numberOfCards){
+    }
+
+    ;
+
+    public boolean isBlackJack(int points, int numberOfCards) {
         return points == 21 && numberOfCards == 2;
-    };
+    }
+
 
 
 }
