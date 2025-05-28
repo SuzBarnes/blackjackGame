@@ -3,7 +3,6 @@ package test;
 import main.Card;
 import main.Dealer;
 import main.Deck;
-import main.Hand;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ public class DealerTest {
         cards.add(Card.ACE);
         dealer.setDeck(cards);
         dealer.dealInDealer();
+        dealer.ifDealerScoreLessThanOrEqualTo16Hit();
         assertEquals(dealer.getHand().size(), 3);
     }
 
@@ -41,6 +41,7 @@ public class DealerTest {
         cards.add(Card.ACE);
         dealer.setDeck(cards);
         dealer.dealInDealer();
+        dealer.ifDealerScoreLessThanOrEqualTo16Hit();
         assertEquals(dealer.getHand().size(), 2);
     }
 
@@ -53,6 +54,7 @@ public class DealerTest {
         cards.add(Card.TEN);
         dealer.setDeck(cards);
         dealer.dealInDealer();
+        dealer.ifDealerScoreLessThanOrEqualTo16Hit();
         assertEquals(dealer.getHand().size(), 3);
         assertEquals(dealer.isBust(), true);
 
@@ -62,12 +64,12 @@ public class DealerTest {
     void ifTheDealerScoreIs21WithTwoCardsHeHasBlackJack(){
         ArrayList<Card> cards = new ArrayList<>();
         Dealer dealer = new Dealer();
-        Deck deck = new Deck();
         cards.add(Card.TEN);
         cards.add(Card.ACE);
         cards.add(Card.TEN);
         dealer.setDeck(cards);
         dealer.dealInDealer();
+        dealer.ifDealerScoreLessThanOrEqualTo16Hit();
         assertEquals(dealer.getHand().size(), 2);
         assertEquals(dealer.isBlackJack(dealer.getPoints(), dealer.getHand().size()), true);
 

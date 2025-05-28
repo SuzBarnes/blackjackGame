@@ -1,4 +1,55 @@
 package main;
 
-public class Player {
+import java.util.ArrayList;
+
+public class Player extends Hand {
+    // every Player starts with 1000 chips
+    private int chips = 1000;
+    private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
+
+    public ArrayList<ArrayList<Card>> getHands() {
+        return hands;
+    }
+
+    public int getChips() {
+        return chips;
+    }
+
+    public void dealPlayerHand(int numberOfHandsToDeal) {
+        for (int i = 0; i < numberOfHandsToDeal; i++) {
+            if (i == 0) {
+                createInitialHand();
+                hands.add(getHand());
+            }
+            if (i > 0) {
+                hand = new ArrayList<>();
+                hit(getDeck().get(0));
+                hit(getDeck().get(0));
+                hands.add(getHand());
+            }
+        }
+    }
+
+    public void split() {
+        // will  need to have something asking whether to split a hand dealt where the cards are the same. Need the option of saying yes or no.
+        // go through each hand in turn to find which cards are matching
+        for (int i = 0; i < hands.size(); i++) {
+            if (doesHandHave2CardsOfEqualValue(i)) {
+                ArrayList<Card> splitHand = new ArrayList<>();
+                splitHand.add(hands.get(i).get(0));
+                hands.get(i).remove(0);
+                hands.add(splitHand);
+            }
+        }
+    }
+
+    private boolean doesHandHave2CardsOfEqualValue(int i) {
+        return hands.get(i).size() == 2 && hands.get(i).get(0) == hands.get(i).get(1);
+    }
+
+    public int bet(int value){
+        return chips = chips - value;
+    }
+
+
 }

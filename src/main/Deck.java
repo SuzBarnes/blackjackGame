@@ -51,9 +51,7 @@ public class Deck {
         return card;
     }
 
-    public Card dealCardAndRemoveFromDeck(ArrayList<Card> deck) {
-
-        Card card = Card.valueOf(getDeck().get(0).name());
+    public Card dealCardAndRemoveFromDeck(Card card) {
         deck.remove(0);
         return card;
     }

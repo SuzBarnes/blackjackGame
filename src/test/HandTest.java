@@ -3,7 +3,6 @@ package test;
 import main.Card;
 import main.Deck;
 import main.Hand;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -138,9 +137,9 @@ public class HandTest {
         deck.generateDeckShuffle();
         hand.createInitialHand();
         assertEquals(hand.getHand().size(), 2);
-        hand.hit(hand.getDeck());
+        hand.hit(hand.getDeck().get(0));
         assertEquals(hand.getHand().size(), 3);
-        hand.hit(hand.getDeck());
+        hand.hit(hand.getDeck().get(0));
         assertEquals(hand.getHand().size(), 4);
     }
 

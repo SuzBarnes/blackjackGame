@@ -40,8 +40,8 @@ public class Hand extends Deck {
         );
     }
 
-    public void hit(ArrayList<Card> deck) {
-        hand.add(dealCardAndRemoveFromDeck(deck));
+    public void hit(Card card) {
+        hand.add(dealCardAndRemoveFromDeck(card));
         calculatePoints();
         System.out.println(
                 "Hit points: " + points
@@ -67,8 +67,6 @@ public class Hand extends Deck {
     public boolean isBust() {
         return points > 21;
     }
-
-    ;
 
     public boolean isBlackJack(int points, int numberOfCards) {
         return points == 21 && numberOfCards == 2;
