@@ -15,6 +15,7 @@ public class DealerTest {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
         deck.generateDeckShuffle();
+        dealer.setDeck(deck.getDeck());
         dealer.dealInDealer();
         assertEquals(dealer.getHand().size(), 2);
     }
@@ -40,6 +41,7 @@ public class DealerTest {
         cards.add(Card.TEN);
         cards.add(Card.ACE);
         dealer.setDeck(cards);
+        System.out.println(dealer.getDeck());
         dealer.dealInDealer();
         dealer.ifDealerScoreLessThanOrEqualTo16Hit();
         assertEquals(dealer.getHand().size(), 2);

@@ -45,7 +45,6 @@ public class Deck {
 
     public Card dealInitialHandAndRemoveCardsFromDeck() {
         ifDeckNeedsToBeCreatedOrReplenished();
-
         Card card = Card.valueOf(getDeck().get(0).name());
         deck.remove(getDeck().get(0));
         return card;

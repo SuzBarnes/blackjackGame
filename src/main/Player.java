@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 
 public class Player extends Hand {
+
     // every Player starts with 1000 chips
     private int chips = 1000;
     private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
@@ -17,16 +18,11 @@ public class Player extends Hand {
 
     public void dealPlayerHand(int numberOfHandsToDeal) {
         for (int i = 0; i < numberOfHandsToDeal; i++) {
-            if (i == 0) {
-                createInitialHand();
-                hands.add(getHand());
-            }
-            if (i > 0) {
                 hand = new ArrayList<>();
                 hit(getDeck().get(0));
                 hit(getDeck().get(0));
+                calculatePoints();
                 hands.add(getHand());
-            }
         }
     }
 
