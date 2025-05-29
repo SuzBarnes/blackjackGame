@@ -35,17 +35,13 @@ public class Hand extends Deck {
         hand.add(dealInitialHandAndRemoveCardsFromDeck());
         hand.add(dealInitialHandAndRemoveCardsFromDeck());
         calculatePoints();
-        System.out.println(
-                "createInitialHand() points: " + points
-        );
+        setDeck(getDeck());
     }
 
-    public void hit(ArrayList<Card> deck) {
-        hand.add(dealCardAndRemoveFromDeck(deck));
+
+    public void hit(Card card) {
+        hand.add(dealCardAndRemoveFromDeck(card));
         calculatePoints();
-        System.out.println(
-                "Hit points: " + points
-        );
     }
 
     public void calculatePoints() {
@@ -54,7 +50,7 @@ public class Hand extends Deck {
         Collections.sort(hand);
         for (Card card : hand) {
 //
-            if (card.isAce() && hand.size() >= 3 && points >10) {
+            if (card.isAce() && hand.size() >= 3 && points > 10) {
                 points = points + card.getPoint();
             } else {
                 points = points + card.getPoints();
@@ -68,12 +64,9 @@ public class Hand extends Deck {
         return points > 21;
     }
 
-    ;
-
     public boolean isBlackJack(int points, int numberOfCards) {
         return points == 21 && numberOfCards == 2;
     }
-
 
 
 }
