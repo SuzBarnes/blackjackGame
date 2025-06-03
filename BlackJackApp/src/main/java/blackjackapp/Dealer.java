@@ -1,6 +1,5 @@
 package blackjackapp;
 
-import java.util.ArrayList;
 
 public class Dealer extends Hand {
 

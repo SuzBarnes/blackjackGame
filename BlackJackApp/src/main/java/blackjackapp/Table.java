@@ -45,7 +45,7 @@ public class Table {
 
     public boolean doesPlayerWin() {
         int dealerPoints = dealer.getPoints();
-        int dealerHandSize = dealer.getHand().size();
+        int dealerHandSize = dealer.getCards().size();
         int playerPoints = player.getPoints();
 
         if (dealer.isBlackJack(dealerPoints, dealerHandSize) ||

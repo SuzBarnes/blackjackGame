@@ -11,146 +11,140 @@ class PlayerTest {
 //    •	Hands (could be more than one, if a player has split his hand)
 //    •	Bankroll (the amount of money the player has)
 
+    Deck deck = new Deck();
+    Player player = new Player();
+    ArrayList<Card> cards = new ArrayList<>();
+
     @Test
     void playerCanHaveTwoHands() {
-        Deck deck = new Deck();
-        Player player = new Player();
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(2);
-        assertEquals(player.getHands().size(), 2);
+
+        assertEquals(2, player.getHands().size());
     }
 
     @Test
     void playerCanHaveOneHand() {
-        Deck deck = new Deck();
-        Player player = new Player();
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(1);
-        assertEquals(player.getHands().size(), 1);
+
+        assertEquals(1, player.getHands().size());
     }
 
     @Test
     void playerCanHaveThreeHands() {
-        Deck deck = new Deck();
-        Player player = new Player();
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(3);
-        assertEquals(player.getHands().size(), 3);
+
+        assertEquals(3, player.getHands().size());
     }
 
     @Test
     void playerCanSplitHandIfCardsDealtAreOfTheSameValue() {
-        ArrayList<Card> cards = new ArrayList<>();
-        Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.TEN);
         player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(1);
-        assertEquals(player.getHands().size(), 1);
+
+        assertEquals(1, player.getHands().size());
+
         player.split();
-        assertEquals(player.getHands().size(), 2);
+        assertEquals(2, player.getHands().size());
     }
 
     @Test
     void playerCannotSplitHandIfCardsDealtAreOfTheDifferentValues() {
-        ArrayList<Card> cards = new ArrayList<>();
-        Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.FIVE);
         player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(1);
-        assertEquals(player.getHands().size(), 1);
+
+        assertEquals(1, player.getHands().size());
         player.split();
-        assertEquals(player.getHands().size(), 1);
+        assertEquals(1, player.getHands().size());
     }
 
     //check this test later when possible to give options as opposed to automatically splitting. What if they want to split one hand and not the other?
     @Test
     void playerCanSplitOneOfTheirHandsIfCardsDealtAreOfTheSameValue() {
-        ArrayList<Card> cards = new ArrayList<>();
-        Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FIVE);
         player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(2);
-        assertEquals(player.getHands().size(), 2);
+
+        assertEquals(2, player.getHands().size());
+
         player.split();
-        assertEquals(player.getHands().size(), 3);
+        assertEquals(3, player.getHands().size());
     }
 
     @Disabled
     @Test
     void playerCanSplitOnlyOneOfTheirHandsIfTwoHandsHaveCardsDealtWithTheSameValue() {
         //this will need to be fixed later on
-        ArrayList<Card> cards = new ArrayList<>();
-        Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FACECARD);
         player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(2);
-        assertEquals(player.getHands().size(), 2);
+
+        assertEquals(2, player.getHands().size());
+
         player.split();
-        assertEquals(player.getHands().size(), 3);
+        assertEquals(3, player.getHands().size());
     }
 
     @Test
     void playerCanSplitBothOfTheirHandsIfTwoHandsHaveCardsDealtWithTheSameValue() {
-        ArrayList<Card> cards = new ArrayList<>();
-        Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FACECARD);
         player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(2);
-        assertEquals(player.getHands().size(), 2);
-        player.split();
 
-        assertEquals(player.getHands().size(), 4);
+        assertEquals(2, player.getHands().size());
+
+        player.split();
+        assertEquals(4, player.getHands().size());
     }
 
 
     @Test
     void playerStartsWith1000Chips() {
-        Player player = new Player();
-        assertEquals(player.getChips(), 1000);
+        assertEquals(1000, player.getChips());
 
     }
 
     @Test
     void playerCanPlaceABet() {
-        Player player = new Player();
         player.bet(100);
-        assertEquals(player.getChips(), 900);
+        assertEquals(900, player.getChips());
     }
 
 //    to be on the org.Table class?
 
     @Test
     void playerCanAddExtraCardToHand() {
-        Deck deck = new Deck();
-        Player player = new Player();
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(1);
         player.hit();
 
-        assertEquals(player.getHand().size(), 3);
+        assertEquals(3, player.getCards().size());
     }
 
     @Disabled
     @Test
     void playerCanPlaceDifferentBetsAgainstDifferentHands() {
-        Player player = new Player();
         player.bet(100);
-        assertEquals(player.getChips(), 900);
+        assertEquals(900, player.getChips());
     }
 
 

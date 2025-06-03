@@ -11,43 +11,37 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class DeckTest {
+    Deck deck = new Deck();
 
     @Test
     void testDeckIsCreatedWith52Cards() {
-        var deck = new Deck();
-        System.out.println("Before generateDeck(): " + deck);
         deck.generateDeck();
-        System.out.println("After generateDeck(): " + deck);
-        assertEquals(deck.getDeck().size(), 52);
+        assertEquals(52, deck.getDeck().size());
 
     }
 
     @Test
     void testDeckHasTheRightValueCardsAtStartOfGame() {
-        var deck = new Deck();
         deck.generateDeck();
 
-
-        assertEquals(Collections.frequency(deck.getDeck(), Card.ACE), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.TWO), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.THREE), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.FOUR), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.FIVE), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.SIX), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.SEVEN), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.EIGHT), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.NINE), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.TEN), 4);
-        assertEquals(Collections.frequency(deck.getDeck(), Card.FACECARD), 12);
-
-
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.ACE));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.TWO));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.THREE));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.FOUR));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.FIVE));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.SIX));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.SEVEN));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.EIGHT));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.NINE));
+        assertEquals(4, Collections.frequency(deck.getDeck(), Card.TEN));
+        assertEquals(12, Collections.frequency(deck.getDeck(), Card.FACECARD));
     }
 
     @Test
     void aDeckIsShuffled() {
-        Deck deck = new Deck();
         deck.generateDeck();
         Deck shuffledDeck = new Deck();
+
         shuffledDeck.generateDeck();
         shuffledDeck.shuffle();
 
@@ -56,16 +50,12 @@ class DeckTest {
 
     @Test
     void aCardIsDealtWhenDealCardMethodUsed(){
-        Deck deck = new Deck();
         deck.generateDeckShuffle();
 
         deck.dealInitialHandAndRemoveCardsFromDeck();
-        assertEquals(deck.getDeck().size(), 51);
+        assertEquals(51, deck.getDeck().size());
         deck.dealInitialHandAndRemoveCardsFromDeck();
-        assertEquals(deck.getDeck().size(), 50);
-
+        assertEquals(50, deck.getDeck().size());
     }
-
-
 
 }

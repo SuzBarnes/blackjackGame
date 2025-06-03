@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Hand extends Deck {
-    ArrayList<Card> hand = new ArrayList<>();
+    ArrayList<Card> cards = new ArrayList<>();
     private int points;
     private int bet;
     private boolean isBust = false;
@@ -21,18 +21,18 @@ public class Hand extends Deck {
         this.bet = bet;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 
 
     public void createInitialHand() {
-        hand.add(dealInitialHandAndRemoveCardsFromDeck());
-        hand.add(dealInitialHandAndRemoveCardsFromDeck());
+        cards.add(dealInitialHandAndRemoveCardsFromDeck());
+        cards.add(dealInitialHandAndRemoveCardsFromDeck());
         calculatePoints();
         setDeck(getDeck(), getCard());
     }
@@ -40,14 +40,14 @@ public class Hand extends Deck {
 
     public void hit() {
         dealCardAndRemoveFromDeck();
-        hand.add(getCard());
+        cards.add(getCard());
         calculatePoints();
     }
 
     public void calculatePoints() {
         points = 0;
-        Collections.sort(hand);
-        for (Card card : hand) {
+        Collections.sort(cards);
+        for (Card card : cards) {
 
             if (card.isAce()) {
                 if (points > 10) {
@@ -55,13 +55,12 @@ public class Hand extends Deck {
                 } else {
                     points = points + card.getPoints();
                 }
-
             }
                 else {
                     points = points + card.getPoints();
                 }
         }
-        isBlackJack(points, hand.size());
+        isBlackJack(points, cards.size());
         isBust();
     }
 

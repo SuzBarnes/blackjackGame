@@ -1,13 +1,17 @@
 package blackjackapp;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TableTest {
+class TableTest {
+
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+        Table table = new Table(dealer, deck);
+
     @Disabled
     @Test
     void tableCanHaveOnePlayer() {
@@ -21,19 +25,17 @@ public class TableTest {
 
     @Test
     void tableHasADealerHand() {
-        Table table = new Table(new Dealer(), new Deck());
         table.start(1,1);
-        assertTrue(!table.getDealer().getHand().isEmpty());
+        assertFalse(table.getDealer().getCards().isEmpty());
 
     }
 
     @Test
     void gameCanBePlayed() {
-        Table table = new Table(new Dealer(), new Deck());
         table.start(2, 2);
-        assertEquals(table.getPlayers().size(), 2);
-        assertEquals(table.getPlayers().get(0).getHands().size(), 2);
-        assertTrue(!table.getDealer().getHand().isEmpty());
+        assertEquals(2, table.getPlayers().size());
+        assertEquals(2, table.getPlayers().get(0).getHands().size());
+        assertFalse(table.getDealer().getCards().isEmpty());
     }
 
     @Test
@@ -43,15 +45,14 @@ public class TableTest {
         cards.add(Card.EIGHT);
         cards.add(Card.ACE);
         cards.add(Card.NINE);
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
-        Table table = new Table(dealer, deck);
+
         table.start(1, 1);
-        assertEquals(table.getPlayers().size(), 1);
-        assertEquals(table.getPlayers().get(0).getHands().size(), 1);
-        assertEquals(table.getDealer().getHand().size(), 2);
+        assertEquals(1, table.getPlayers().size());
+        assertEquals(1, table.getPlayers().get(0).getHands().size());
+        assertEquals(2, table.getDealer().getCards().size());
         assertFalse(table.getPlayer().isBust());
         assertTrue(table.doesPlayerWin());
     }
@@ -63,15 +64,13 @@ public class TableTest {
         cards.add(Card.TEN);
         cards.add(Card.ACE);
         cards.add(Card.NINE);
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
-        Table table = new Table(dealer, deck);
+
         table.start(1, 1);
-        assertEquals(table.getPlayers().size(), 1);
-        assertEquals(table.getPlayers().get(0).getHands().size(), 1);
-        assertEquals(table.getDealer().getHand().size(), 2);
+        assertEquals(1, table.getPlayers().size());
+        assertEquals(1, table.getPlayers().get(0).getHands().size());
+        assertEquals(2, table.getDealer().getCards().size());
         assertFalse(table.getPlayer().isBust());
         assertFalse(table.doesPlayerWin());
     }
@@ -84,11 +83,10 @@ public class TableTest {
         cards.add(Card.SEVEN);
         cards.add(Card.FIVE);
         cards.add(Card.FACECARD);
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
-        Table table = new Table(dealer, deck);
+
         table.start(1, 1);
         table.getPlayer().hit();
         assertTrue(table.getPlayer().isBust());
@@ -104,12 +102,12 @@ public class TableTest {
         cards.add(Card.SIX);
         cards.add(Card.SEVEN);
         cards.add(Card.FACECARD);
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
-        Table table = new Table(dealer, deck);
+
         table.start(1, 1);
+
         assertTrue(table.getDealer().isBust());
         assertTrue(table.doesPlayerWin());
     }
@@ -123,13 +121,13 @@ public class TableTest {
         cards.add(Card.SEVEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FACECARD);
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
-        Table table = new Table(dealer, deck);
+
         table.start(1, 1);
         table.getPlayer().hit();
+
         assertTrue(table.getDealer().isBust());
         assertTrue(table.getPlayer().isBust());
         assertFalse(table.doesPlayerWin());
@@ -168,19 +166,19 @@ public class TableTest {
 
     @Test
     void moreThanOnePlayerCanHaveAHandAtATable() {
-        Table table = new Table(new Dealer(), new Deck());
         table.start(2, 1);
-        assertEquals(table.getPlayers().size(), 2);
+
+        assertEquals(2, table.getPlayers().size());
     }
 
 
     @Test
     void moreThanOnePlayerCanHaveMoreThanOneHandsAtATable() {
-        Table table = new Table(new Dealer(), new Deck());
         table.start(2, 2);
-        assertEquals(table.getPlayers().size(), 2);
-        assertEquals(table.getPlayers().get(0).getHands().size(), 2);
-        assertEquals(table.getPlayers().get(1).getHands().size(), 2);
+
+        assertEquals(2, table.getPlayers().size());
+        assertEquals(2, table.getPlayers().get(0).getHands().size());
+        assertEquals(2, table.getPlayers().get(1).getHands().size());
 
     }
 
