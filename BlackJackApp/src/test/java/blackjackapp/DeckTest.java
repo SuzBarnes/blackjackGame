@@ -57,8 +57,7 @@ class DeckTest {
     @Test
     void aCardIsDealtWhenDealCardMethodUsed(){
         Deck deck = new Deck();
-        deck.generateDeck();
-        deck.shuffle();
+        deck.generateDeckShuffle();
 
         deck.dealInitialHandAndRemoveCardsFromDeck();
         assertEquals(deck.getDeck().size(), 51);

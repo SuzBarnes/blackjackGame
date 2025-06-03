@@ -5,18 +5,27 @@ import java.util.Collections;
 
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<>();
-
+    private Card card;
     public ArrayList<Card> getDeck() {
         return deck;
     }
-    public void setDeck(ArrayList<Card> deck) {
+
+    public void setDeck(ArrayList<Card> deck, Card card) {
         this.deck = deck;
+        this.card = card;
+    }
+    public void setCard(Card card){
+        this.card = card;
     }
 
+    public Card getCard(){
+        return card;
+    }
 
     public void generateDeckShuffle() {
         generateDeck();
         shuffle();
+        setCard(getDeck().get(0));
     }
 
     public void generateDeck() {
@@ -43,16 +52,17 @@ public class Deck {
 
     public Card dealInitialHandAndRemoveCardsFromDeck() {
         ifDeckNeedsToBeCreatedOrReplenished();
-        Card card = getDeck().get(0);
         Card cardName = Card.valueOf(card.name());
         deck.remove(card);
+        setCard(deck.get(0));
+        setDeck(deck, card);
         return cardName;
     }
 
-    public Card dealCardAndRemoveFromDeck(Card card) {
+    public void dealCardAndRemoveFromDeck() {
+        setCard(deck.get(0));
         deck.remove(0);
-        setDeck(deck);
-        return card;
+        setDeck(deck, card);
     }
 
 

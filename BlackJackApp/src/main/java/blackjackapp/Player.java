@@ -6,7 +6,7 @@ public class Player extends Hand {
 
     // every org.Player starts with 1000 chips
     private int chips = 1000;
-    private Card nextCard;
+    private boolean isBust = false;
     private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
 
     public ArrayList<ArrayList<Card>> getHands() {
@@ -20,9 +20,8 @@ public class Player extends Hand {
     public void dealPlayerHand(int numberOfHandsToDeal) {
         for (int i = 0; i < numberOfHandsToDeal; i++) {
             hand = new ArrayList<>();
-
-            hit(getDeck().get(0));
-            hit(getDeck().get(0));
+            hit();
+            hit();
             calculatePoints();
             hands.add(getHand());
         }

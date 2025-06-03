@@ -137,9 +137,9 @@ public class HandTest {
         deck.generateDeckShuffle();
         hand.createInitialHand();
         assertEquals(hand.getHand().size(), 2);
-        hand.hit(hand.getDeck().get(0));
+        hand.hit();
         assertEquals(hand.getHand().size(), 3);
-        hand.hit(hand.getDeck().get(0));
+        hand.hit();
         assertEquals(hand.getHand().size(), 4);
     }
 

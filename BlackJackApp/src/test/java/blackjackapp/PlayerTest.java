@@ -16,7 +16,7 @@ class PlayerTest {
         Deck deck = new Deck();
         Player player = new Player();
         deck.generateDeckShuffle();
-        player.setDeck(deck.getDeck());
+        player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(2);
         assertEquals(player.getHands().size(), 2);
     }
@@ -26,7 +26,7 @@ class PlayerTest {
         Deck deck = new Deck();
         Player player = new Player();
         deck.generateDeckShuffle();
-        player.setDeck(deck.getDeck());
+        player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(1);
         assertEquals(player.getHands().size(), 1);
     }
@@ -36,7 +36,7 @@ class PlayerTest {
         Deck deck = new Deck();
         Player player = new Player();
         deck.generateDeckShuffle();
-        player.setDeck(deck.getDeck());
+        player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(3);
         assertEquals(player.getHands().size(), 3);
     }
@@ -47,7 +47,7 @@ class PlayerTest {
         Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.TEN);
-        player.setDeck(cards);
+        player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(1);
         assertEquals(player.getHands().size(), 1);
         player.split();
@@ -60,7 +60,7 @@ class PlayerTest {
         Player player = new Player();
         cards.add(Card.TEN);
         cards.add(Card.FIVE);
-        player.setDeck(cards);
+        player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(1);
         assertEquals(player.getHands().size(), 1);
         player.split();
@@ -76,7 +76,7 @@ class PlayerTest {
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FIVE);
-        player.setDeck(cards);
+        player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(2);
         assertEquals(player.getHands().size(), 2);
         player.split();
@@ -93,7 +93,7 @@ class PlayerTest {
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FACECARD);
-        player.setDeck(cards);
+        player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(2);
         assertEquals(player.getHands().size(), 2);
         player.split();
@@ -108,12 +108,10 @@ class PlayerTest {
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
         cards.add(Card.FACECARD);
-        player.setDeck(cards);
+        player.setDeck(cards, cards.get(0));
         player.dealPlayerHand(2);
-        System.out.println(player.getHands() + " :player.getHands()");
         assertEquals(player.getHands().size(), 2);
         player.split();
-        System.out.println(player.getHands() + " :player.getHands()");
 
         assertEquals(player.getHands().size(), 4);
     }
@@ -134,6 +132,19 @@ class PlayerTest {
     }
 
 //    to be on the org.Table class?
+
+    @Test
+    void playerCanAddExtraCardToHand() {
+        Deck deck = new Deck();
+        Player player = new Player();
+        deck.generateDeckShuffle();
+        player.setDeck(deck.getDeck(), deck.getCard());
+        player.dealPlayerHand(1);
+        player.hit();
+
+        assertEquals(player.getHand().size(), 3);
+    }
+
     @Disabled
     @Test
     void playerCanPlaceDifferentBetsAgainstDifferentHands() {
