@@ -1,16 +1,16 @@
-package main;
+package blackjackapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Hand extends Deck {
     ArrayList<Card> hand = new ArrayList<>();
+    private int points;
+    private int bet;
 
     public int getPoints() {
         return points;
     }
-
-    private int points;
 
     public int getBet() {
         return bet;
@@ -19,8 +19,6 @@ public class Hand extends Deck {
     public void setBet(int bet) {
         this.bet = bet;
     }
-
-    private int bet;
 
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
@@ -40,21 +38,28 @@ public class Hand extends Deck {
 
 
     public void hit(Card card) {
-        hand.add(dealCardAndRemoveFromDeck(card));
+
+        dealCardAndRemoveFromDeck(card);
+        hand.add(card);
         calculatePoints();
     }
 
     public void calculatePoints() {
         points = 0;
-        //sorting the Cards enum into order so Ace is last:
         Collections.sort(hand);
         for (Card card : hand) {
-//
-            if (card.isAce() && hand.size() >= 3 && points > 10) {
-                points = points + card.getPoint();
-            } else {
-                points = points + card.getPoints();
+
+            if (card.isAce()) {
+                if (points > 10) {
+                    points = points + card.getPoint();
+                } else {
+                    points = points + card.getPoints();
+                }
+
             }
+                else {
+                    points = points + card.getPoints();
+                }
         }
         isBlackJack(points, hand.size());
         isBust();

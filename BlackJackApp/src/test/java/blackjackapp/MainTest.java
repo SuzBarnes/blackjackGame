@@ -1,4 +1,4 @@
-package test;
+package blackjackapp;
 
 public class MainTest {
 }
