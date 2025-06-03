@@ -1,11 +1,12 @@
-package main;
+package blackjackapp;
 
 import java.util.ArrayList;
 
 public class Player extends Hand {
 
-    // every Player starts with 1000 chips
+    // every org.Player starts with 1000 chips
     private int chips = 1000;
+    private Card nextCard;
     private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
 
     public ArrayList<ArrayList<Card>> getHands() {
@@ -18,11 +19,12 @@ public class Player extends Hand {
 
     public void dealPlayerHand(int numberOfHandsToDeal) {
         for (int i = 0; i < numberOfHandsToDeal; i++) {
-                hand = new ArrayList<>();
-                hit(getDeck().get(0));
-                hit(getDeck().get(0));
-                calculatePoints();
-                hands.add(getHand());
+            hand = new ArrayList<>();
+
+            hit(getDeck().get(0));
+            hit(getDeck().get(0));
+            calculatePoints();
+            hands.add(getHand());
         }
     }
 
@@ -43,7 +45,7 @@ public class Player extends Hand {
         return hands.get(i).size() == 2 && hands.get(i).get(0) == hands.get(i).get(1);
     }
 
-    public int bet(int value){
+    public int bet(int value) {
         return chips = chips - value;
     }
 

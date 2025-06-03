@@ -1,12 +1,11 @@
-package test;
+package blackjackapp;
 
-import main.Dealer;
-import main.Deck;
-import main.Table;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TableTest {
     @Disabled
@@ -37,16 +36,44 @@ public class TableTest {
         assertEquals(table.getDealer().getHand().size(), 2);
     }
 
-    @Disabled
     @Test
     void ifPlayerHandIsNotBustAndHigherThanDealersPlayerWins() {
-
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.TEN);
+        cards.add(Card.EIGHT);
+        cards.add(Card.ACE);
+        cards.add(Card.NINE);
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+        dealer.setDeck(cards);
+        deck.setDeck(dealer.getDeck());
+        Table table = new Table(dealer, deck);
+        table.start(1, 1);
+        assertEquals(table.getPlayers().size(), 1);
+        assertEquals(table.getPlayers().get(0).getHands().size(), 1);
+        assertEquals(table.getDealer().getHand().size(), 2);
+        assertFalse(table.getPlayer().isBust());
+        assertTrue(table.doesPlayerWin());
     }
 
-    @Disabled
     @Test
-    void ifPlayerHandIsNotBustAndHigherThanDealersBetIsDoubledAndReturnedToPlayerChips() {
-
+    void ifPlayerHandIsNotBustTheSamePointsAsDealerDoesPlayerWinReturnsFalse() {
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.TEN);
+        cards.add(Card.TEN);
+        cards.add(Card.ACE);
+        cards.add(Card.NINE);
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+        dealer.setDeck(cards);
+        deck.setDeck(dealer.getDeck());
+        Table table = new Table(dealer, deck);
+        table.start(1, 1);
+        assertEquals(table.getPlayers().size(), 1);
+        assertEquals(table.getPlayers().get(0).getHands().size(), 1);
+        assertEquals(table.getDealer().getHand().size(), 2);
+        assertFalse(table.getPlayer().isBust());
+        assertFalse(table.doesPlayerWin());
     }
 
     @Disabled

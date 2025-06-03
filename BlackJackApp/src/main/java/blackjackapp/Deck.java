@@ -1,4 +1,4 @@
-package main;
+package blackjackapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,21 +6,20 @@ import java.util.Collections;
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<>();
 
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
     public void setDeck(ArrayList<Card> deck) {
         this.deck = deck;
     }
 
-
-    public ArrayList<Card> getDeck() {
-        return deck;
-    }
 
     public void generateDeckShuffle() {
         generateDeck();
         shuffle();
     }
 
-    public ArrayList<Card> generateDeck() {
+    public void generateDeck() {
         while (deck.size() < 52) {
             while (deck.size() < 12) {
                 deck.add(Card.FACECARD);
@@ -36,7 +35,6 @@ public class Deck {
             deck.add(Card.NINE);
             deck.add(Card.TEN);
         }
-        return deck;
     }
 
     public void shuffle() {
@@ -45,18 +43,21 @@ public class Deck {
 
     public Card dealInitialHandAndRemoveCardsFromDeck() {
         ifDeckNeedsToBeCreatedOrReplenished();
-        Card card = Card.valueOf(getDeck().get(0).name());
-        deck.remove(getDeck().get(0));
-        return card;
+        Card card = getDeck().get(0);
+        Card cardName = Card.valueOf(card.name());
+        deck.remove(card);
+        return cardName;
     }
 
     public Card dealCardAndRemoveFromDeck(Card card) {
         deck.remove(0);
+        setDeck(deck);
         return card;
     }
 
+
     private void ifDeckNeedsToBeCreatedOrReplenished() {
-        if (deck.size() == 0) {
+        if (deck.isEmpty()) {
             generateDeckShuffle();
         }
     }

@@ -1,4 +1,4 @@
-package main;
+package blackjackapp;
 
 public enum Card {
 

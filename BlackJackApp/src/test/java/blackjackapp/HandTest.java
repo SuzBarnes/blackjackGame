@@ -1,19 +1,19 @@
-package test;
+package blackjackapp;
 
-import main.Card;
-import main.Deck;
-import main.Hand;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
+
 
 public class HandTest {
+
     @Test
-    void handIsDealtTwoCards() {
+    public void handIsDealtTwoCards() {
         Hand hand = new Hand();
         Deck deck = new Deck();
         deck.generateDeckShuffle();
@@ -22,7 +22,7 @@ public class HandTest {
     }
 
     @Test
-    void handCanHaveMoreThanTwoCards() {
+    public void handCanHaveMoreThanTwoCards() {
         Hand hand = new Hand();
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.FIVE);
@@ -37,7 +37,7 @@ public class HandTest {
     }
 
     @Test
-    void handHasTotalNumberOfPoints() {
+    public void handHasTotalNumberOfPoints() {
         Hand hand1 = new Hand();
         ArrayList<Card> cards1 = new ArrayList<>();
         cards1.add(Card.ACE);
@@ -57,14 +57,14 @@ public class HandTest {
     }
 
     @Test
-    void aBetCanBeMade(){
+    public void aBetCanBeMade(){
         Hand hand = new Hand();
         hand.setBet(10);
         assertEquals(hand.getBet(), 10);
     }
 
     @Test
-    void ifHandIsOver21ThePlayerIsBust(){
+    public void ifHandIsOver21ThePlayerIsBust(){
         Hand hand = new Hand();
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.TEN);
@@ -77,7 +77,7 @@ public class HandTest {
         assertEquals(hand.isBust(), true);
     }
     @Test
-    void ifPlayerIsBustWithAnAceAcePointValueIsOne(){
+    public void ifPlayerIsBustWithAnAceAcePointValueIsOne(){
         Hand hand = new Hand();
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.ACE);
@@ -94,7 +94,7 @@ public class HandTest {
 
     }
     @Test
-    void ifHandIsEqualTo21WithTwoCardsThePlayerHasBlackJack(){
+    public void ifHandIsEqualTo21WithTwoCardsThePlayerHasBlackJack(){
         Hand hand = new Hand();
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.TEN);
@@ -109,7 +109,7 @@ public class HandTest {
         assertTrue(hand.isBlackJack(hand.getPoints(), hand.getHand().size()));
     }
     @Test
-    void ifHandIsNot21WithTwoCardsThePlayerHasNotGotBlackJack(){
+    public void ifHandIsNot21WithTwoCardsThePlayerHasNotGotBlackJack(){
         Hand hand = new Hand();
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.FIVE);
@@ -120,7 +120,7 @@ public class HandTest {
     }
 
     @Test
-    void ifHandIsEqualTo21WithThreeCardsThePlayerDoesNotHaveBlackJack(){
+    public void ifHandIsEqualTo21WithThreeCardsThePlayerDoesNotHaveBlackJack(){
         Hand hand = new Hand();
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.TEN);
@@ -131,7 +131,7 @@ public class HandTest {
         assertFalse(hand.isBlackJack(hand.getPoints(), cards.size()));
     }
     @Test
-    void ifPlayerHitsACardIsDealt(){
+    public void ifPlayerHitsACardIsDealt(){
         Hand hand = new Hand();
         Deck deck = new Deck();
         deck.generateDeckShuffle();
@@ -141,6 +141,61 @@ public class HandTest {
         assertEquals(hand.getHand().size(), 3);
         hand.hit(hand.getDeck().get(0));
         assertEquals(hand.getHand().size(), 4);
+    }
+
+    @Test
+    public void ifPlayerHas3AcesScoreShouldBe13(){
+        Hand hand = new Hand();
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        hand.setHand(cards);
+        hand.calculatePoints();
+        assertFalse(hand.isBust());
+        assertEquals(hand.getPoints(), 13);
+    }
+
+    @Test
+    public void ifPlayerHas4AcesScoreShouldBe14(){
+        Hand hand = new Hand();
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        hand.setHand(cards);
+        hand.calculatePoints();
+        assertFalse(hand.isBust());
+        assertEquals(hand.getPoints(), 14);
+    }
+
+    @Test
+    public void ifPlayerWillBeBustAllSubsequentAcesAreWorthOnePoint(){
+        Hand hand = new Hand();
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.ACE);
+        cards.add(Card.FIVE);
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        hand.setHand(cards);
+        hand.calculatePoints();
+        assertEquals(hand.getPoints(), 19);
+    }
+
+    @Test
+    public void ifPlayerWillBeBustWithAnAceAllAcesAreWorthOnePoint(){
+        Hand hand = new Hand();
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.ACE);
+        cards.add(Card.FIVE);
+        cards.add(Card.TEN);
+        cards.add(Card.ACE);
+        cards.add(Card.ACE);
+        hand.setHand(cards);
+        hand.calculatePoints();
+        assertEquals(hand.getPoints(), 18);
     }
 
 //    @Test

@@ -1,16 +1,13 @@
-package test;
+package blackjackapp;
 
-import main.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PlayerTest {
+class PlayerTest {
 //    •	Hands (could be more than one, if a player has split his hand)
 //    •	Bankroll (the amount of money the player has)
 
@@ -136,13 +133,14 @@ public class PlayerTest {
         assertEquals(player.getChips(), 900);
     }
 
-    //to be on the Table class?
-//    @Test
-//    void playerCanPlaceDifferentBetsAgainstDifferentHands() {
-//        Player player = new Player();
-//        player.bet(100);
-//        assertEquals(player.getChips(), 900);
-//    }
+//    to be on the org.Table class?
+    @Disabled
+    @Test
+    void playerCanPlaceDifferentBetsAgainstDifferentHands() {
+        Player player = new Player();
+        player.bet(100);
+        assertEquals(player.getChips(), 900);
+    }
 
 
 }
