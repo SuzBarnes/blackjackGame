@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Hand extends Deck {
-    ArrayList<Card> hand = new ArrayList<>();
+    ArrayList<Card> cards = new ArrayList<>();
     private int points;
     private int bet;
     private boolean isBust = false;
+    private boolean hasBlackJack = false;
 
     public int getPoints() {
         return points;
@@ -21,18 +22,17 @@ public class Hand extends Deck {
         this.bet = bet;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
+    public ArrayList<Card> getCards() {
+        return cards;
     }
-
 
     public void createInitialHand() {
-        hand.add(dealInitialHandAndRemoveCardsFromDeck());
-        hand.add(dealInitialHandAndRemoveCardsFromDeck());
+        cards.add(dealInitialHandAndRemoveCardsFromDeck());
+        cards.add(dealInitialHandAndRemoveCardsFromDeck());
         calculatePoints();
         setDeck(getDeck(), getCard());
     }
@@ -40,14 +40,14 @@ public class Hand extends Deck {
 
     public void hit() {
         dealCardAndRemoveFromDeck();
-        hand.add(getCard());
+        cards.add(getCard());
         calculatePoints();
     }
 
     public void calculatePoints() {
         points = 0;
-        Collections.sort(hand);
-        for (Card card : hand) {
+        Collections.sort(cards);
+        for (Card card : cards) {
 
             if (card.isAce()) {
                 if (points > 10) {
@@ -55,25 +55,28 @@ public class Hand extends Deck {
                 } else {
                     points = points + card.getPoints();
                 }
-
             }
                 else {
                     points = points + card.getPoints();
                 }
         }
-        isBlackJack(points, hand.size());
+        hasBlackJack();
         isBust();
     }
 
     public boolean isBust() {
         if(points > 21){
             isBust = true;
+            points = 0;
         }
         return isBust;
     }
 
-    public boolean isBlackJack(int points, int numberOfCards) {
-        return points == 21 && numberOfCards == 2;
+    public boolean hasBlackJack() {
+        if(points == 21 && cards.size() == 2){
+            hasBlackJack = true;
+        }
+        return hasBlackJack;
     }
 
 

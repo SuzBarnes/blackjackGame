@@ -4,26 +4,34 @@ import java.util.ArrayList;
 
 public class Player extends Hand {
 
-    // every org.Player starts with 1000 chips
+    private boolean hasWon = false;
+
+    // every Player starts with 1000 chips
     private int chips = 1000;
-    private boolean isBust = false;
-    private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
+    private final ArrayList<ArrayList<Card>> hands = new ArrayList<>();
 
     public ArrayList<ArrayList<Card>> getHands() {
         return hands;
     }
 
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
+    public boolean isHasWon() {
+        return hasWon;
+    }
     public int getChips() {
         return chips;
     }
 
     public void dealPlayerHand(int numberOfHandsToDeal) {
         for (int i = 0; i < numberOfHandsToDeal; i++) {
-            hand = new ArrayList<>();
+            cards = new ArrayList<>();
             hit();
             hit();
             calculatePoints();
-            hands.add(getHand());
+            hands.add(getCards());
         }
     }
 
@@ -44,8 +52,8 @@ public class Player extends Hand {
         return hands.get(i).size() == 2 && hands.get(i).get(0) == hands.get(i).get(1);
     }
 
-    public int bet(int value) {
-        return chips = chips - value;
+    public void bet(int value) {
+        chips = chips - value;
     }
 
 

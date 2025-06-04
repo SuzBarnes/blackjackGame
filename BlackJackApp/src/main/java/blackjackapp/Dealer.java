@@ -1,8 +1,17 @@
 package blackjackapp;
 
-import java.util.ArrayList;
 
 public class Dealer extends Hand {
+    private boolean hasWon = false;
+
+    public boolean isHasWon() {
+        return hasWon;
+    }
+
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
 
     public void dealInDealer() {
         createInitialHand();
