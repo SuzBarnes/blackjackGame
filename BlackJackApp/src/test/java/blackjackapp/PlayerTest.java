@@ -140,6 +140,15 @@ class PlayerTest {
         assertEquals(3, player.getCards().size());
     }
 
+    @Test
+    public void aBetIsAssignedToAHand() {
+        deck.generateDeckShuffle();
+        player.setDeck(deck.getDeck(), deck.getCard());
+        player.setBet(100);
+        player.dealPlayerHand(1);
+        assertEquals(100, player.getBet());
+    }
+
     @Disabled
     @Test
     void playerCanPlaceDifferentBetsAgainstDifferentHands() {

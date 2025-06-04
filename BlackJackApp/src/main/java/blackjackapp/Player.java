@@ -7,8 +7,9 @@ public class Player extends Hand {
     private boolean hasWon = false;
 
     // every Player starts with 1000 chips
-    private int chips = 1000;
-    private final ArrayList<ArrayList<Card>> hands = new ArrayList<>();
+    private double chips = 1000;
+
+    private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
 
     public ArrayList<ArrayList<Card>> getHands() {
         return hands;
@@ -21,11 +22,15 @@ public class Player extends Hand {
     public boolean isHasWon() {
         return hasWon;
     }
-    public int getChips() {
+    public double getChips() {
         return chips;
+    }
+    public void setChips(double chips) {
+        this.chips = chips;
     }
 
     public void dealPlayerHand(int numberOfHandsToDeal) {
+            hands = new ArrayList<>();
         for (int i = 0; i < numberOfHandsToDeal; i++) {
             cards = new ArrayList<>();
             hit();

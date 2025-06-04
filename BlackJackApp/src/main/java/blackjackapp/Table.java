@@ -8,12 +8,16 @@ public class Table {
     private ArrayList players = new ArrayList<>();
     private final Dealer dealer;
     private Deck deck;
-    private int chips = player.getChips();
+    private double chips = player.getChips();
     private int bet = player.getBet();
 
     public Table(Dealer dealer, Deck deck) {
         this.dealer = dealer;
         this.deck = deck;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Player getPlayer() {
@@ -33,7 +37,6 @@ public class Table {
     public void start(int numberOfPlayers, int numberOfHandsPerPlayer) {
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            player = new Player();
 
             if (i == 0) {
                 dealer.dealInDealer();
@@ -77,20 +80,18 @@ public class Table {
 
     }
 
-    public void evaluateWinnerAndPayout(){
-
-        if(player.isHasWon() && player.hasBlackJack()){
-            chips = (int) (chips + (getPlayer().getBet() * 2.5));
+    public void evaluateWinnerAndPayout() {
+        bet = getPlayer().getBet();
+        if (player.isHasWon() && player.hasBlackJack()) {
+            chips =  chips + (bet * 2.5);
         }
-        if(player.isHasWon()){
-            chips = chips + (getPlayer().getBet() * 2);
+        if (player.isHasWon() && !player.hasBlackJack()) {
+            chips = chips + (bet * 2);
         }
-        if(dealer.isHasWon()){
-            chips = chips -getPlayer().getBet();
+        if (dealer.isHasWon()) {
+            chips = chips - bet;
         }
-        if(!player.isHasWon() && !dealer.isHasWon()){
-            chips = chips + getPlayer().getBet();
-        }
+        player.setChips(chips);
     }
 
 
