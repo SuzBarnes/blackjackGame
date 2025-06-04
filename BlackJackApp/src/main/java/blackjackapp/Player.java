@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Player extends Hand {
 
+    private boolean hasWon = false;
+
     // every Player starts with 1000 chips
     private int chips = 1000;
     private final ArrayList<ArrayList<Card>> hands = new ArrayList<>();
@@ -12,6 +14,13 @@ public class Player extends Hand {
         return hands;
     }
 
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
+    public boolean isHasWon() {
+        return hasWon;
+    }
     public int getChips() {
         return chips;
     }

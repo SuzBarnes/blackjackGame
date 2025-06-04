@@ -70,7 +70,7 @@ class DealerTest {
 
         dealer.ifDealerScoreLessThanOrEqualTo16Hit();
         assertEquals(2, dealer.getCards().size());
-        assertEquals(true, dealer.isBlackJack(dealer.getPoints(), dealer.getCards().size()));
+        assertEquals(true, dealer.hasBlackJack());
 
     }
 

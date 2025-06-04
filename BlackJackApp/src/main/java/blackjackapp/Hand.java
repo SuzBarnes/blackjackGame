@@ -8,6 +8,7 @@ public class Hand extends Deck {
     private int points;
     private int bet;
     private boolean isBust = false;
+    private boolean hasBlackJack = false;
 
     public int getPoints() {
         return points;
@@ -28,7 +29,6 @@ public class Hand extends Deck {
     public ArrayList<Card> getCards() {
         return cards;
     }
-
 
     public void createInitialHand() {
         cards.add(dealInitialHandAndRemoveCardsFromDeck());
@@ -60,19 +60,23 @@ public class Hand extends Deck {
                     points = points + card.getPoints();
                 }
         }
-        isBlackJack(points, cards.size());
+        hasBlackJack();
         isBust();
     }
 
     public boolean isBust() {
         if(points > 21){
             isBust = true;
+            points = 0;
         }
         return isBust;
     }
 
-    public boolean isBlackJack(int points, int numberOfCards) {
-        return points == 21 && numberOfCards == 2;
+    public boolean hasBlackJack() {
+        if(points == 21 && cards.size() == 2){
+            hasBlackJack = true;
+        }
+        return hasBlackJack;
     }
 
 

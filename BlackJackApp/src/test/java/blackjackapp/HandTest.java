@@ -102,7 +102,7 @@ public class HandTest {
         hand.setCards(cards);
         hand.calculatePoints();
 
-        assertTrue(hand.isBlackJack(hand.getPoints(), hand.getCards().size()));
+        assertTrue(hand.hasBlackJack());
     }
     @Test
     public void ifHandIsNot21WithTwoCardsThePlayerHasNotGotBlackJack(){
@@ -111,7 +111,7 @@ public class HandTest {
         hand.setCards(cards);
         hand.calculatePoints();
 
-        assertFalse(hand.isBlackJack(hand.getPoints(), cards.size()));
+        assertFalse(hand.hasBlackJack());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class HandTest {
         hand.setCards(cards);
         hand.calculatePoints();
 
-        assertFalse(hand.isBlackJack(hand.getPoints(), cards.size()));
+        assertFalse(hand.hasBlackJack());
     }
     @Test
     public void ifPlayerHitsACardIsDealt(){
