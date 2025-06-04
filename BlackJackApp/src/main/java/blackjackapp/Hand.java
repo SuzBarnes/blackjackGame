@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Hand extends Deck {
+
     ArrayList<Card> cards = new ArrayList<>();
     private int points;
     private int bet;
     private boolean isBust = false;
     private boolean hasBlackJack = false;
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 
     public int getPoints() {
         return points;
@@ -31,6 +36,7 @@ public class Hand extends Deck {
     }
 
     public void createInitialHand() {
+        setBet(bet);
         cards.add(dealInitialHandAndRemoveCardsFromDeck());
         cards.add(dealInitialHandAndRemoveCardsFromDeck());
         calculatePoints();

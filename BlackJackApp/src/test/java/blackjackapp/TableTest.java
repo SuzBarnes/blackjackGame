@@ -144,6 +144,7 @@ class TableTest {
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
         player.setBet(100);
+        table.setPlayer(player);
 
         table.start(1, 1);
         assertTrue(table.getDealer().isBust());
@@ -154,7 +155,6 @@ class TableTest {
 
     }
 
-    @Disabled
     @Test
     void ifDealerHasBlackJackPlayerLosesBet() {
         cards.add(Card.TEN);
@@ -166,6 +166,7 @@ class TableTest {
         dealer.setDeck(cards, cards.get(0));
         deck.setDeck(dealer.getDeck(), dealer.getCard());
         player.setBet(100);
+        table.setPlayer(player);
 
         table.start(1, 1);
         assertTrue(table.getDealer().hasBlackJack());
@@ -176,15 +177,86 @@ class TableTest {
 
     }
 
-    @Disabled
     @Test
-    void ifPlayerHasBlackJackPlayerWinsOnePointFiveBet() {
+    void ifPlayerHasBlackJackPlayerWinsTwoAndAHalfTimesBet() {
+        cards.add(Card.SIX);
+        cards.add(Card.SEVEN);
+        cards.add(Card.FACECARD);
+        cards.add(Card.TEN);
+        cards.add(Card.ACE);
+
+        dealer.setDeck(cards, cards.get(0));
+        deck.setDeck(dealer.getDeck(), dealer.getCard());
+        player.setBet(100);
+        table.setPlayer(player);
+
+        table.start(1, 1);
+        assertTrue(table.getPlayer().hasBlackJack());
+
+        assertTrue(table.doesPlayerWin());
+        assertEquals(100, table.getPlayer().getBet());
+        assertEquals(1250, table.getPlayer().getChips());
 
     }
 
-    @Disabled
+
     @Test
     void ifPlayerAndDealerHaveSamePointsPushAndGetBackOriginalBet() {
+        cards.add(Card.SEVEN);
+        cards.add(Card.FACECARD);
+        cards.add(Card.TEN);
+        cards.add(Card.SEVEN);
+
+        dealer.setDeck(cards, cards.get(0));
+        deck.setDeck(dealer.getDeck(), dealer.getCard());
+        player.setBet(100);
+        table.setPlayer(player);
+
+        table.start(1, 1);
+
+        assertFalse(table.doesPlayerWin());
+        assertEquals(100, table.getPlayer().getBet());
+        assertEquals(1000, table.getPlayer().getChips());
+
+    }
+
+    @Test
+    void ifPlayerAndDealerBothHaveBlackJackReturnOriginalBet() {
+        cards.add(Card.ACE);
+        cards.add(Card.FACECARD);
+        cards.add(Card.TEN);
+        cards.add(Card.ACE);
+
+        dealer.setDeck(cards, cards.get(0));
+        deck.setDeck(dealer.getDeck(), dealer.getCard());
+        player.setBet(100);
+        table.setPlayer(player);
+
+        table.start(1, 1);
+
+        assertFalse(table.doesPlayerWin());
+        assertEquals(100, table.getPlayer().getBet());
+        assertEquals(1000, table.getPlayer().getChips());
+
+    }
+
+    @Test
+    void ifDealerWinsWithBlackJackPlayerLosesBet() {
+        cards.add(Card.ACE);
+        cards.add(Card.FACECARD);
+        cards.add(Card.TEN);
+        cards.add(Card.NINE);
+
+        dealer.setDeck(cards, cards.get(0));
+        deck.setDeck(dealer.getDeck(), dealer.getCard());
+        player.setBet(100);
+        table.setPlayer(player);
+
+        table.start(1, 1);
+
+        assertFalse(table.doesPlayerWin());
+        assertEquals(100, table.getPlayer().getBet());
+        assertEquals(900, table.getPlayer().getChips());
 
     }
 
