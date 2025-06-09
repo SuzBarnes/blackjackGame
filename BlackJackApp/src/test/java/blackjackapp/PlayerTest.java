@@ -2,11 +2,10 @@ package blackjackapp;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 class PlayerTest {
 //    •	Hands (could be more than one, if a player has split his hand)
 //    •	Bankroll (the amount of money the player has)
@@ -67,26 +66,10 @@ class PlayerTest {
         assertEquals(1, player.getHands().size());
     }
 
-    //check this test later when possible to give options as opposed to automatically splitting. What if they want to split one hand and not the other?
-    @Test
-    void playerCanSplitOneOfTheirHandsIfCardsDealtAreOfTheSameValue() {
-        cards.add(Card.TEN);
-        cards.add(Card.TEN);
-        cards.add(Card.FACECARD);
-        cards.add(Card.FIVE);
-        player.setDeck(cards, cards.get(0));
-        player.dealPlayerHand(2);
-
-        assertEquals(2, player.getHands().size());
-
-        player.split();
-        assertEquals(3, player.getHands().size());
-    }
-
     @Disabled
     @Test
     void playerCanSplitOnlyOneOfTheirHandsIfTwoHandsHaveCardsDealtWithTheSameValue() {
-        //this will need to be fixed later on
+        //TODO this will need to be fixed later on. Add dealer in?
         cards.add(Card.TEN);
         cards.add(Card.TEN);
         cards.add(Card.FACECARD);
@@ -96,7 +79,6 @@ class PlayerTest {
 
         assertEquals(2, player.getHands().size());
 
-        player.split();
         assertEquals(3, player.getHands().size());
     }
 
@@ -131,17 +113,21 @@ class PlayerTest {
 //    to be on the org.Table class?
 
     @Test
-    void playerCanAddExtraCardToHand() {
+    void playerCanAddExtraCardToHandUnlessBlackJack() {
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
         player.dealPlayerHand(1);
         player.hit();
+        if (player.hasBlackJack()) {
+            assertEquals(2, player.getCards().size());
 
-        assertEquals(3, player.getCards().size());
+        } else {
+            assertEquals(3, player.getCards().size());
+        }
     }
 
     @Test
-    public void aBetIsAssignedToAHand() {
+    void aBetIsAssignedToAHand() {
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
         player.setBet(100);

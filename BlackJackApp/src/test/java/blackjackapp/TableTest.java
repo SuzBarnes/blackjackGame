@@ -43,7 +43,6 @@ class TableTest {
 
     @Test
     void ifPlayerHandIsNotBustAndHigherThanDealersPlayerWins() {
-        ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.TEN);
         cards.add(Card.EIGHT);
         cards.add(Card.ACE);
@@ -62,7 +61,6 @@ class TableTest {
 
     @Test
     void ifPlayerHandIsNotBustTheSamePointsAsDealerDoesPlayerWinReturnsFalse() {
-        ArrayList<Card> cards = new ArrayList<>();
         cards.add(Card.TEN);
         cards.add(Card.TEN);
         cards.add(Card.ACE);
@@ -282,7 +280,46 @@ class TableTest {
         assertEquals(2, table.getPlayers().size());
         assertEquals(2, table.getPlayers().get(0).getHands().size());
         assertEquals(2, table.getPlayers().get(1).getHands().size());
+    }
+
+    // TODO
+    @Disabled
+    @Test
+    void differentPlayerCanPlaceDifferentBetsOnTheirHand() {
+        player.setBet(100);
+        Player player1 = new Player();
+        player1.setBet(200);
+        table.setPlayer(player);
+        table.setPlayer(player1);
+        table.start(2, 1);
+
+        assertEquals(100, table.getPlayers().get(0).getBet());
+        assertEquals(200, table.getPlayers().get(1).getBet());
 
     }
 
+    @Test
+    void playerCanSplitOneOfTheirHandsIfCardsDealtAreOfTheSameValue() {
+
+        cards.add(Card.TEN);
+        cards.add(Card.SEVEN);
+
+        cards.add(Card.TEN);
+        cards.add(Card.TEN);
+
+        cards.add(Card.FACECARD);
+        cards.add(Card.FIVE);
+
+        dealer.setDeck(cards, cards.get(0));
+        deck.setDeck(dealer.getDeck(), dealer.getCard());
+        //separate out deal player hand
+        // needs to be dealPlayerHand() then the number of times it is called will depend on the input by player.
+
+        table.start(1, 2);
+
+        assertEquals(2, table.getPlayer().getHands().size());
+
+        table.getPlayer().split();
+        assertEquals(3, table.getPlayer().getHands().size());
+    }
 }

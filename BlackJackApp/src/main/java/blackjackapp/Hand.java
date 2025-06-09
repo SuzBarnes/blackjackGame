@@ -3,6 +3,8 @@ package blackjackapp;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static java.lang.System.out;
+
 public class Hand extends Deck {
 
     ArrayList<Card> cards = new ArrayList<>();
@@ -10,10 +12,7 @@ public class Hand extends Deck {
     private int bet;
     private boolean isBust = false;
     private boolean hasBlackJack = false;
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
+    private boolean canBeSplit = false;
 
     public int getPoints() {
         return points;
@@ -41,6 +40,10 @@ public class Hand extends Deck {
         cards.add(dealInitialHandAndRemoveCardsFromDeck());
         calculatePoints();
         setDeck(getDeck(), getCard());
+        out.println("Dealer's cards: " + cards.get(0) + " + X");
+        if(hasBlackJack()){
+            out.println("Dealer has blackjack.");
+        }
     }
 
 
@@ -48,10 +51,13 @@ public class Hand extends Deck {
         dealCardAndRemoveFromDeck();
         cards.add(getCard());
         calculatePoints();
+        out.println("Cards: " + cards + "\nPoints: " + points);
     }
 
     public void calculatePoints() {
         points = 0;
+        setBet(bet);
+
         Collections.sort(cards);
         for (Card card : cards) {
 
@@ -73,7 +79,6 @@ public class Hand extends Deck {
     public boolean isBust() {
         if(points > 21){
             isBust = true;
-            points = 0;
         }
         return isBust;
     }
@@ -83,6 +88,12 @@ public class Hand extends Deck {
             hasBlackJack = true;
         }
         return hasBlackJack;
+    }
+
+    public void canBeSplit(){
+       if(cards.get(0) == cards.get(1)){
+           canBeSplit = true;
+       }
     }
 
 

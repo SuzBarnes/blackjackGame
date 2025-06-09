@@ -2,6 +2,8 @@ package blackjackapp;
 
 import java.util.ArrayList;
 
+import static java.lang.System.out;
+
 public class Table {
 
     private Player player = new Player();
@@ -29,8 +31,13 @@ public class Table {
     }
 
 
+
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(ArrayList players) {
+        this.players = players;
     }
 
     // could change numberOfHandsPerPlayer and set it as an input in the console instead
@@ -42,8 +49,10 @@ public class Table {
                 dealer.dealInDealer();
             }
             player.setDeck(dealer.getDeck(), dealer.getCard());
+
             player.dealPlayerHand(numberOfHandsPerPlayer);
-            players.add(getPlayer());
+
+            players.add(player);
             setHasWon();
             evaluateWinnerAndPayout();
         }
@@ -67,13 +76,13 @@ public class Table {
 
         if (dealer.hasBlackJack() && !player.hasBlackJack()
                 || player.isBust()
-                || dealerPoints > playerPoints) {
+                || dealerPoints > playerPoints && !dealer.isBust()) {
             dealer.setHasWon(true);
             player.setHasWon(false);
         }
         if (player.hasBlackJack() && !dealer.hasBlackJack()
                 || dealer.isBust()
-                || playerPoints > dealerPoints) {
+                || playerPoints > dealerPoints && !player.isBust()) {
             player.setHasWon(true);
             dealer.setHasWon(false);
         }
@@ -93,6 +102,4 @@ public class Table {
         }
         player.setChips(chips);
     }
-
-
 }
