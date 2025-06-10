@@ -6,6 +6,14 @@ import java.util.Collections;
 import static java.lang.System.out;
 
 public class Hand extends Deck {
+    public Hand(ArrayList<Card> cards, int points, int bet, boolean isBust, boolean hasBlackJack, boolean canBeSplit) {
+        this.cards = cards;
+        this.points = points;
+        this.bet = bet;
+        this.isBust = isBust;
+        this.hasBlackJack = hasBlackJack;
+        this.canBeSplit = canBeSplit;
+    }
 
     ArrayList<Card> cards = new ArrayList<>();
     private int points;
@@ -90,10 +98,11 @@ public class Hand extends Deck {
         return hasBlackJack;
     }
 
-    public void canBeSplit(){
+    public boolean canBeSplit(){
        if(cards.get(0) == cards.get(1)){
            canBeSplit = true;
        }
+       return canBeSplit;
     }
 
 

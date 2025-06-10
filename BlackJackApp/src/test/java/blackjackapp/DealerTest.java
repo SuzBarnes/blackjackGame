@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DealerTest {
     Deck deck = new Deck();
-    Dealer dealer = new Dealer();
+
+    Dealer dealer = new Dealer(new ArrayList<>(), 0, 0, false, false, false);
     ArrayList<Card> cards = new ArrayList<>();
 
     @Test

@@ -11,8 +11,8 @@ class PlayerTest {
 //    •	Bankroll (the amount of money the player has)
 
     Deck deck = new Deck();
-    Player player = new Player();
     ArrayList<Card> cards = new ArrayList<>();
+    Player player = new Player(cards, 0,0,false, false,false);
 
     @Test
     void playerCanHaveTwoHands() {
@@ -105,12 +105,46 @@ class PlayerTest {
     }
 
     @Test
-    void playerCanPlaceABet() {
-        player.bet(100);
+    void playerCanPlaceABetOnAHand() {
+        deck.generateDeckShuffle();
+        player.setDeck(deck.getDeck(), deck.getCard());
+        player.dealPlayerHand(1);
+        player.getHands().get(0).setBet(100);
+        player.calculateChipsRemaining(0);
+
         assertEquals(900, player.getChips());
     }
 
-//    to be on the org.Table class?
+    @Test
+    void ifSplitOccursBetIsCarriedAcrossToo() {
+        cards.add(Card.TEN);
+        cards.add(Card.TEN);
+        player.setDeck(cards, cards.get(0));
+        player.dealPlayerHand(1);
+        player.getHands().get(0).setBet(100);
+
+        player.calculateChipsRemaining(0);
+        assertEquals(900, player.getChips());
+
+        player.split();
+
+        assertEquals(800, player.getChips());
+        assertEquals(100, player.getHands().get(0).getBet());
+        assertEquals(100, player.getHands().get(1).getBet());
+    }
+
+    @Test
+    void playerCanPlaceDifferentBetsOnDifferentHands() {
+        deck.generateDeckShuffle();
+        player.setDeck(deck.getDeck(), deck.getCard());
+        player.dealPlayerHand(2);
+        player.getHands().get(0).setBet(100);
+        player.getHands().get(1).setBet(200);
+
+        assertEquals(100, player.getHands().get(0).getBet());
+        assertEquals(200, player.getHands().get(1).getBet());
+
+    }
 
     @Test
     void playerCanAddExtraCardToHandUnlessBlackJack() {
@@ -138,7 +172,7 @@ class PlayerTest {
     @Disabled
     @Test
     void playerCanPlaceDifferentBetsAgainstDifferentHands() {
-        player.bet(100);
+
         assertEquals(900, player.getChips());
     }
 

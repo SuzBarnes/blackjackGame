@@ -9,9 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class TableTest {
 
     Deck deck = new Deck();
-    Dealer dealer = new Dealer();
+    Dealer dealer = new Dealer(new ArrayList<>(), 0, 0, false, false, false);
+
     Table table = new Table(dealer, deck);
-    Player player = new Player();
+    Player player = new Player(new ArrayList<>(), 0, 0, false, false, false);
     ArrayList<Card> cards = new ArrayList<>();
 
     @Test
@@ -258,9 +259,15 @@ class TableTest {
 
     }
 
-    @Disabled
+
     @Test
     void playerCanPlaceDifferentBetsOnDifferentHands() {
+        table.start(1,2);
+        table.getPlayers().get(0).getHands().get(0).setBet(100);
+        table.getPlayers().get(0).getHands().get(1).setBet(200);
+
+        assertEquals(100, table.getPlayers().get(0).getHands().get(0).getBet());
+        assertEquals(200, table.getPlayers().get(0).getHands().get(1).getBet());
 
     }
 
@@ -287,7 +294,7 @@ class TableTest {
     @Test
     void differentPlayerCanPlaceDifferentBetsOnTheirHand() {
         player.setBet(100);
-        Player player1 = new Player();
+        Player player1 = new Player(new ArrayList<>(), 0, 0, false, false, false);
         player1.setBet(200);
         table.setPlayer(player);
         table.setPlayer(player1);

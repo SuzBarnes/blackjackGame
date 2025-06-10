@@ -1,6 +1,7 @@
 package blackjackapp;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 
 import java.util.ArrayList;
@@ -12,9 +13,9 @@ import static org.junit.Assert.assertTrue;
 
 public class HandTest {
 
-    Hand hand = new Hand();
     Deck deck = new Deck();
     ArrayList<Card> cards = new ArrayList<>();
+    Hand hand = new Hand( cards, 0, 0, false, false,false);
 
     @Test
     public void handIsDealtTwoCards() {
@@ -47,7 +48,7 @@ public class HandTest {
         hand.calculatePoints();
         assertEquals(19, hand.getPoints());
 
-        Hand hand2 = new Hand();
+        Hand hand2 = new Hand( cards, 0, 0, false, false,false);
         ArrayList<Card> cards2 = new ArrayList<>();
         cards2.add(Card.ACE);
         cards2.add(Card.SIX);

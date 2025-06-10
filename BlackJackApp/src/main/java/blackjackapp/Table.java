@@ -2,16 +2,13 @@ package blackjackapp;
 
 import java.util.ArrayList;
 
-import static java.lang.System.out;
 
 public class Table {
-
-    private Player player = new Player();
+    Player player = new Player(new ArrayList<>(), 0,0,false, false,false);
     private ArrayList players = new ArrayList<>();
     private final Dealer dealer;
     private Deck deck;
     private double chips = player.getChips();
-    private int bet = player.getBet();
 
     public Table(Dealer dealer, Deck deck) {
         this.dealer = dealer;
@@ -53,8 +50,10 @@ public class Table {
             player.dealPlayerHand(numberOfHandsPerPlayer);
 
             players.add(player);
-            setHasWon();
-            evaluateWinnerAndPayout();
+            for( int j = 0; j<numberOfHandsPerPlayer; j++) {
+                setHasWon();
+                evaluateWinnerAndPayout(j);
+            }
         }
     }
 
@@ -89,8 +88,8 @@ public class Table {
 
     }
 
-    public void evaluateWinnerAndPayout() {
-        bet = getPlayer().getBet();
+    public void evaluateWinnerAndPayout(int j) {
+        int bet = getPlayer().getHands().get(j).getBet();
         if (player.isHasWon() && player.hasBlackJack()) {
             chips =  chips + (bet * 2.5);
         }

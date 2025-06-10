@@ -11,11 +11,13 @@ public class Player extends Hand {
     // every Player starts with 1000 chips
     private double chips = 1000;
 
-    private ArrayList<ArrayList<Card>> hands = new ArrayList<>();
-    Console console = new Console();
+    private ArrayList<Hand> hands = new ArrayList<>();
 
+    public Player(ArrayList<Card> cards, int points, int bet, boolean isBust, boolean hasBlackJack, boolean canBeSplit) {
+        super(cards, points, bet, isBust, hasBlackJack, canBeSplit);
+    }
 
-    public ArrayList<ArrayList<Card>> getHands() {
+    public ArrayList<Hand> getHands() {
         return hands;
     }
 
@@ -47,7 +49,8 @@ public class Player extends Hand {
             out.println("Player Cards: " + cards);
             doesPlayerHaveBlackJackOrIsBust();
             canBeSplit();
-            hands.add(getCards());
+            hands.add(new Hand(cards, getPoints(), getBet(), isBust(), hasBlackJack(), canBeSplit()));
+            calculateChipsRemaining(i);
         }
     }
 
@@ -57,7 +60,7 @@ public class Player extends Hand {
         }
         if (isBust()) {
             out.println("Player bust.");
-            hands.add(getCards());
+            hands.add(new Hand(cards, getPoints(), getBet(), isBust(), hasBlackJack(), canBeSplit()));
         }
     }
 
@@ -67,21 +70,23 @@ public void split() {
     // go through each hand in turn to find which cards are matching
     for (int i = 0; i < hands.size(); i++) {
         if (doesHandHave2CardsOfEqualValue(i)) {
-            ArrayList<Card> splitHand = new ArrayList<>();
-            splitHand.add(hands.get(i).get(0));
-            hands.get(i).remove(0);
+            ArrayList<Card> splitCard = new ArrayList<>();
+            splitCard.add(hands.get(i).cards.get(0));
+            //does the bet double here?
+            Hand splitHand = new Hand(splitCard, getPoints(), hands.get(i).getBet(), isBust(), hasBlackJack(), canBeSplit());
+            calculateChipsRemaining(i);
+            hands.get(i).cards.remove(0);
             hands.add(splitHand);
         }
     }
 }
 
 private boolean doesHandHave2CardsOfEqualValue(int i) {
-    return hands.get(i).size() == 2 && hands.get(i).get(0) == hands.get(i).get(1);
+    return hands.get(i).cards.size() == 2 && hands.get(i).cards.get(0) == hands.get(i).cards.get(1);
 }
 
-public void bet(int value) {
-    chips = chips - value;
+void calculateChipsRemaining(int i){
+        chips = chips - getHands().get(i).getBet();
 }
-
 
 }

@@ -1,10 +1,16 @@
 package blackjackapp;
 
 
+import java.util.ArrayList;
+
 import static java.lang.System.out;
 
 public class Dealer extends Hand {
     private boolean hasWon = false;
+
+    public Dealer(ArrayList<Card> cards, int points, int bet, boolean isBust, boolean hasBlackJack, boolean canBeSplit) {
+        super(cards, points, bet, isBust, hasBlackJack, canBeSplit);
+    }
 
     public boolean isHasWon() {
         return hasWon;
