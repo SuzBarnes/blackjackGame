@@ -2,14 +2,13 @@ package blackjackapp;
 
 import java.util.ArrayList;
 
-public class Table {
 
-    private Player player = new Player();
+public class Table {
+    Player player = new Player(new ArrayList<>(), 0,0,false, false,false);
     private ArrayList players = new ArrayList<>();
     private final Dealer dealer;
     private Deck deck;
     private double chips = player.getChips();
-    private int bet = player.getBet();
 
     public Table(Dealer dealer, Deck deck) {
         this.dealer = dealer;
@@ -29,8 +28,13 @@ public class Table {
     }
 
 
+
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(ArrayList players) {
+        this.players = players;
     }
 
     // could change numberOfHandsPerPlayer and set it as an input in the console instead
@@ -42,10 +46,14 @@ public class Table {
                 dealer.dealInDealer();
             }
             player.setDeck(dealer.getDeck(), dealer.getCard());
+
             player.dealPlayerHand(numberOfHandsPerPlayer);
-            players.add(getPlayer());
-            setHasWon();
-            evaluateWinnerAndPayout();
+
+            players.add(player);
+            for( int j = 0; j<numberOfHandsPerPlayer; j++) {
+                setHasWon();
+                evaluateWinnerAndPayout(j);
+            }
         }
     }
 
@@ -67,21 +75,21 @@ public class Table {
 
         if (dealer.hasBlackJack() && !player.hasBlackJack()
                 || player.isBust()
-                || dealerPoints > playerPoints) {
+                || dealerPoints > playerPoints && !dealer.isBust()) {
             dealer.setHasWon(true);
             player.setHasWon(false);
         }
         if (player.hasBlackJack() && !dealer.hasBlackJack()
                 || dealer.isBust()
-                || playerPoints > dealerPoints) {
+                || playerPoints > dealerPoints && !player.isBust()) {
             player.setHasWon(true);
             dealer.setHasWon(false);
         }
 
     }
 
-    public void evaluateWinnerAndPayout() {
-        bet = getPlayer().getBet();
+    public void evaluateWinnerAndPayout(int j) {
+        int bet = getPlayer().getHands().get(j).getBet();
         if (player.isHasWon() && player.hasBlackJack()) {
             chips =  chips + (bet * 2.5);
         }
@@ -93,6 +101,4 @@ public class Table {
         }
         player.setChips(chips);
     }
-
-
 }
