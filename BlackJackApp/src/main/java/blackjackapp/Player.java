@@ -1,32 +1,23 @@
 package blackjackapp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.System.out;
 
 public class Player extends Hand {
-
-    private boolean hasWon = false;
 
     // every Player starts with 1000 chips
     private double chips = 1000;
 
     private ArrayList<Hand> hands = new ArrayList<>();
 
-    public Player(ArrayList<Card> cards, int points, int bet, boolean isBust, boolean hasBlackJack, boolean canBeSplit) {
-        super(cards, points, bet, isBust, hasBlackJack, canBeSplit);
+    public Player(ArrayList<Card> cards, int points, int bet, boolean hasBlackJack, boolean isBust, boolean canBeSplit) {
+        super(cards, points, bet, hasBlackJack, isBust, canBeSplit);
     }
 
-    public ArrayList<Hand> getHands() {
+    public List<Hand> getHands() {
         return hands;
-    }
-
-    public void setHasWon(boolean hasWon) {
-        this.hasWon = hasWon;
-    }
-
-    public boolean isHasWon() {
-        return hasWon;
     }
 
     public double getChips() {
@@ -45,48 +36,38 @@ public class Player extends Hand {
             hit();
             hit();
             calculatePoints();
-            out.println("You have + " + getPoints() + " points.");
-            out.println("Player Cards: " + cards);
-            doesPlayerHaveBlackJackOrIsBust();
-            canBeSplit();
-            hands.add(new Hand(cards, getPoints(), getBet(), isBust(), hasBlackJack(), canBeSplit()));
+            hands.add(new Hand(cards, getPoints(), getBet(), hasBlackJack(), isBust(), canBeSplit()));
             calculateChipsRemaining(i);
         }
     }
 
-    private void doesPlayerHaveBlackJackOrIsBust() {
-        if (hasBlackJack()) {
-            out.println("Congratulations. You have BlackJack!");
-        }
-        if (isBust()) {
-            out.println("Player bust.");
-            hands.add(new Hand(cards, getPoints(), getBet(), isBust(), hasBlackJack(), canBeSplit()));
-        }
-    }
+    public void split() {
 
+        for (int i = 0; i < hands.size(); i++) {
+            if (doesHandHave2CardsOfEqualValue(i) && chips >= hands.get(i).getBet()) {
+                ArrayList<Card> splitCard = new ArrayList<>();
 
-public void split() {
-    // will  need to have something asking whether to split a hand dealt where the cards are the same. Need the option of saying yes or no.
-    // go through each hand in turn to find which cards are matching
-    for (int i = 0; i < hands.size(); i++) {
-        if (doesHandHave2CardsOfEqualValue(i)) {
-            ArrayList<Card> splitCard = new ArrayList<>();
-            splitCard.add(hands.get(i).cards.get(0));
-            //does the bet double here?
-            Hand splitHand = new Hand(splitCard, getPoints(), hands.get(i).getBet(), isBust(), hasBlackJack(), canBeSplit());
-            calculateChipsRemaining(i);
-            hands.get(i).cards.remove(0);
-            hands.add(splitHand);
+                splitCard.add(hands.get(i).cards.get(0));
+
+                Hand splitHand = new Hand(splitCard, splitCard.get(0).getPoints(), hands.get(i).getBet(), hasBlackJack(), isBust(), canBeSplit());
+
+                calculateChipsRemaining(i);
+
+                hands.get(i).cards.remove(0);
+                hands.add(splitHand);
+
+            } else if (doesHandHave2CardsOfEqualValue(i) && chips < hands.get(i).getBet()) {
+                throw new RuntimeException("Sorry, you don't have enough chips to split this time.");
+            }
         }
     }
-}
 
-private boolean doesHandHave2CardsOfEqualValue(int i) {
-    return hands.get(i).cards.size() == 2 && hands.get(i).cards.get(0) == hands.get(i).cards.get(1);
-}
+    private boolean doesHandHave2CardsOfEqualValue(int i) {
+        return hands.get(i).cards.size() == 2 && hands.get(i).cards.get(0) == hands.get(i).cards.get(1);
+    }
 
-void calculateChipsRemaining(int i){
+    void calculateChipsRemaining(int i) {
         chips = chips - getHands().get(i).getBet();
-}
+    }
 
 }
