@@ -1,18 +1,21 @@
 package blackjackapp;
-
+import org.junit.function.ThrowingRunnable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PlayerTest {
 //    •	Hands (could be more than one, if a player has split his hand)
 //    •	Bankroll (the amount of money the player has)
 
     Deck deck = new Deck();
     ArrayList<Card> cards = new ArrayList<>();
-    Player player = new Player(cards, 0,0,false, false,false);
+    Player player = new Player(cards, 0, 0, false, false, false);
 
     @Test
     void playerCanHaveTwoHands() {
@@ -147,20 +150,6 @@ class PlayerTest {
     }
 
     @Test
-    void playerCanAddExtraCardToHandUnlessBlackJack() {
-        deck.generateDeckShuffle();
-        player.setDeck(deck.getDeck(), deck.getCard());
-        player.dealPlayerHand(1);
-        player.hit();
-        if (player.hasBlackJack()) {
-            assertEquals(2, player.getCards().size());
-
-        } else {
-            assertEquals(3, player.getCards().size());
-        }
-    }
-
-    @Test
     void aBetIsAssignedToAHand() {
         deck.generateDeckShuffle();
         player.setDeck(deck.getDeck(), deck.getCard());
@@ -169,12 +158,40 @@ class PlayerTest {
         assertEquals(100, player.getBet());
     }
 
-    @Disabled
     @Test
-    void playerCanPlaceDifferentBetsAgainstDifferentHands() {
+    void whenAHandCanSplitDoNotAllowIfThereAreNotEnoughChips() {
+        cards.add(Card.TEN);
+        cards.add(Card.TEN);
+        player.setDeck(cards, cards.get(0));
+        player.dealPlayerHand(1);
+        player.getHands().get(0).setBet(600);
 
-        assertEquals(900, player.getChips());
+        player.calculateChipsRemaining(0);
+        assertEquals(400, player.getChips());
+
+        var exception = assertThrows(RuntimeException.class, (ThrowingRunnable) () -> player.split());
+
+        assertEquals("Sorry, you don't have enough chips to split this time.", exception.getMessage());
+        assertEquals(400, player.getChips());
     }
 
+    @Test
+    void whenAHandCanSplitAllowIfThereAreEnoughChips() {
+        cards.add(Card.TEN);
+        cards.add(Card.TEN);
+        player.setDeck(cards, cards.get(0));
+        player.dealPlayerHand(1);
+        player.getHands().get(0).setBet(400);
+
+        player.calculateChipsRemaining(0);
+        assertEquals(600, player.getChips());
+        player.split();
+        assertEquals(200, player.getChips());
+
+    }
+
+    //test for if chips <  hand bet
+    //test for if chips = hand bet
+    // test for if chips > hand bet
 
 }

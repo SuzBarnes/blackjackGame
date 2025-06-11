@@ -15,7 +15,7 @@ public class HandTest {
 
     Deck deck = new Deck();
     ArrayList<Card> cards = new ArrayList<>();
-    Hand hand = new Hand( cards, 0, 0, false, false,false);
+    Hand hand = new Hand( cards, 0, 0, false,false,false);
 
     @Test
     public void handIsDealtTwoCards() {
@@ -48,7 +48,7 @@ public class HandTest {
         hand.calculatePoints();
         assertEquals(19, hand.getPoints());
 
-        Hand hand2 = new Hand( cards, 0, 0, false, false,false);
+        Hand hand2 = new Hand( cards, 0, 0, false,false,false);
         ArrayList<Card> cards2 = new ArrayList<>();
         cards2.add(Card.ACE);
         cards2.add(Card.SIX);
@@ -91,10 +91,25 @@ public class HandTest {
         cards.add(Card.EIGHT);
         hand.setCards(cards);
         hand.calculatePoints();
-
         assertFalse(hand.isBust());
         assertEquals(17, hand.getPoints());
+    }
 
+    @Test
+    public void ifPlayerBecomesBustWithAnAdditionalAceThatAcePointValueIsOne(){
+        cards.add(Card.ACE);
+        cards.add(Card.EIGHT);
+        hand.setCards(cards);
+        hand.calculatePoints();
+
+        assertFalse(hand.isBust());
+        assertEquals(19, hand.getPoints());
+
+        cards.add(Card.ACE);
+        hand.setCards(cards);
+        hand.calculatePoints();
+        assertFalse(hand.isBust());
+        assertEquals(20, hand.getPoints());
     }
     @Test
     public void ifHandIsEqualTo21WithTwoCardsThePlayerHasBlackJack(){
@@ -103,6 +118,7 @@ public class HandTest {
         hand.setCards(cards);
         hand.calculatePoints();
 
+        assertEquals(2, hand.cards.size());
         assertTrue(hand.hasBlackJack());
     }
     @Test
@@ -112,6 +128,7 @@ public class HandTest {
         hand.setCards(cards);
         hand.calculatePoints();
 
+        assertEquals(2, hand.cards.size());
         assertFalse(hand.hasBlackJack());
     }
 
@@ -123,8 +140,10 @@ public class HandTest {
         hand.setCards(cards);
         hand.calculatePoints();
 
+        assertEquals(3, hand.cards.size());
         assertFalse(hand.hasBlackJack());
     }
+
     @Test
     public void ifPlayerHitsACardIsDealt(){
         deck.generateDeckShuffle();
@@ -190,16 +209,28 @@ public class HandTest {
         assertEquals(18, hand.getPoints());
     }
 
-//    @Test
-//    void ifPlayerWinsWithBlackJackReturnDoubleTheBet(){
-//
-//    }
-//    @Test
-//    void ifPlayerScoreGreaterThanDealerPlayerWins(){}
-//
-//    @Test
-//    void ifPlayerWinsDoubleBetMadeIsReturnedToPlayer(){}
-//
+    @Test
+    public void canBeSplitIsTrueWhenTwoCardsAreDealtOfTheSameValue(){
+        cards.add(Card.TEN);
+        cards.add(Card.TEN);
+        hand.setCards(cards);
+        hand.calculatePoints();
+
+        assertTrue(hand.canBeSplit());
+    }
+
+    @Test
+    public void canBeSplitIsFalseWhenTwoCardsAreDealtOfTheSameValueButHandHasThreeCards(){
+        cards.add(Card.SEVEN);
+        cards.add(Card.ACE);
+        cards.add(Card.SEVEN);
+        hand.setCards(cards);
+        hand.calculatePoints();
+
+        assertFalse(hand.canBeSplit());
+    }
+
+
 //    @Test
 //    void ifPlayerLosesBetIsLost(){}
 //

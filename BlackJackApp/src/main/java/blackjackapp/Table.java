@@ -27,17 +27,10 @@ public class Table {
         return dealer;
     }
 
-
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(ArrayList players) {
-        this.players = players;
-    }
-
-    // could change numberOfHandsPerPlayer and set it as an input in the console instead
     public void start(int numberOfPlayers, int numberOfHandsPerPlayer) {
 
         for (int i = 0; i < numberOfPlayers; i++) {
@@ -46,57 +39,58 @@ public class Table {
                 dealer.dealInDealer();
             }
             player.setDeck(dealer.getDeck(), dealer.getCard());
-
             player.dealPlayerHand(numberOfHandsPerPlayer);
 
             players.add(player);
-            for( int j = 0; j<numberOfHandsPerPlayer; j++) {
-                setHasWon();
-                evaluateWinnerAndPayout(j);
-            }
+
+            assignWhoWinsAndPayout(numberOfHandsPerPlayer);
         }
     }
 
-    //create hasWon on the what's it called. If both hasWon is false, then it is a draw
-    // if dealer wins check for blackjack - need to check if blackjack before anything and assign dealer/player has won.
-    // if player wins, check for blackjack
-    public boolean doesPlayerWin() {
-        int dealerPoints = dealer.getPoints();
-        int playerPoints = player.getPoints();
-
-        return !dealer.hasBlackJack() &&
-                !player.isBust()
-                && (dealerPoints < playerPoints || dealer.isBust());
+    void assignWhoWinsAndPayout(int numberOfHandsPerPlayer) {
+        for(int j = 0; j< numberOfHandsPerPlayer; j++) {
+            player.getHands().get(j).calculatePoints();
+            setHasWon(j);
+            evaluateWinnerAndPayout(j);
+        }
     }
 
-    public void setHasWon() {
+    public void setHasWon(int j) {
+        Hand currentPlayerHand = player.getHands().get(j);
         int dealerPoints = dealer.getPoints();
-        int playerPoints = player.getPoints();
+        int playerPoints = currentPlayerHand.getPoints();
 
-        if (dealer.hasBlackJack() && !player.hasBlackJack()
-                || player.isBust()
+        if (dealer.hasBlackJack() && !currentPlayerHand.hasBlackJack()
+                || currentPlayerHand.isBust()
                 || dealerPoints > playerPoints && !dealer.isBust()) {
             dealer.setHasWon(true);
-            player.setHasWon(false);
+            currentPlayerHand.setHasWon(false);
         }
         if (player.hasBlackJack() && !dealer.hasBlackJack()
                 || dealer.isBust()
-                || playerPoints > dealerPoints && !player.isBust()) {
-            player.setHasWon(true);
+                || playerPoints > dealerPoints && !currentPlayerHand.isBust()) {
+            currentPlayerHand.setHasWon(true);
             dealer.setHasWon(false);
         }
+       if(!dealer.hasBlackJack() &&
+                !currentPlayerHand.isBust()
+                && (dealerPoints < playerPoints || dealer.isBust())){
+           currentPlayerHand.setHasWon(true);
+           dealer.setHasWon(false);
+       }
 
     }
 
     public void evaluateWinnerAndPayout(int j) {
         int bet = getPlayer().getHands().get(j).getBet();
-        if (player.isHasWon() && player.hasBlackJack()) {
+        Hand playerCurrentHand = player.getHands().get(j);
+        if (playerCurrentHand.isHasWon() && playerCurrentHand.hasBlackJack()) {
             chips =  chips + (bet * 2.5);
         }
-        if (player.isHasWon() && !player.hasBlackJack()) {
+        if (playerCurrentHand.isHasWon() && !playerCurrentHand.hasBlackJack()) {
             chips = chips + (bet * 2);
         }
-        if (dealer.isHasWon()) {
+        if (dealer.isHasWon() && !playerCurrentHand.isHasWon()) {
             chips = chips - bet;
         }
         player.setChips(chips);

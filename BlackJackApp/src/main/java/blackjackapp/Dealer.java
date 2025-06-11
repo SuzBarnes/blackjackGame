@@ -3,15 +3,16 @@ package blackjackapp;
 
 import java.util.ArrayList;
 
-import static java.lang.System.out;
 
 public class Dealer extends Hand {
-    private boolean hasWon = false;
 
-    public Dealer(ArrayList<Card> cards, int points, int bet, boolean isBust, boolean hasBlackJack, boolean canBeSplit) {
-        super(cards, points, bet, isBust, hasBlackJack, canBeSplit);
+    public Dealer(ArrayList<Card> cards, int points, int bet, boolean hasBlackJack, boolean isBust, boolean canBeSplit) {
+        super(cards, points, bet, hasBlackJack, isBust, canBeSplit);
     }
 
+    private boolean hasWon = false;
+
+    @Override
     public boolean isHasWon() {
         return hasWon;
     }
@@ -19,7 +20,6 @@ public class Dealer extends Hand {
     public void setHasWon(boolean hasWon) {
         this.hasWon = hasWon;
     }
-
 
     public void dealInDealer() {
         createInitialHand();
@@ -30,14 +30,7 @@ public class Dealer extends Hand {
 
     public void ifDealerScoreLessThanOrEqualTo16Hit() {
         if (getPoints() <= 16) {
-            out.println("Dealer has " + getPoints() +
-                    " points.\nDealer has to draw again. ");
             hit();
-            out.println("Dealer has " + getPoints() +
-                    " points.");
-            if(isBust()){
-                out.println("Dealer is bust.");
-            }
         }
     }
 }
